@@ -1,0 +1,105 @@
+﻿<link href="@Url.Content("~/Content/font.css")" rel="stylesheet" type="text/css" />
+
+@model IEnumerable<librarium.Models.Member>
+
+@{
+    ViewBag.Title = "Members";
+}
+
+<h2>List of members</h2>
+
+<p>
+    @Html.ActionLink("Add member", "Create", "Members", htmlAttributes: new { @class = "btn btn-success" })
+</p>
+<table id="membersDatatable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonalNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MembershipCardId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonalNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MembershipCardId)
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Employee"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default" })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default" })
+                        <button data-member-id="@item.Id" class="button-link js-delete btn btn-danger">Delete</button>
+                    }
+
+
+
+                    <!-- @Html.ActionLink("Delete", "Delete", new { id = item.Id }) -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#membersDatatable").DataTable();
+            $("#membersDatatable .js-delete").on("click", function () {
+                var button = $(this);
+                bootbox.confirm("Do you want to delete this member?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Members/Delete/" + button.attr("data-member-id"),
+                            method: "GET",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+
+                });
+
+            });
+        });
+    </script>
+
+}

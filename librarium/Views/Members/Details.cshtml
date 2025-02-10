@@ -1,0 +1,68 @@
+﻿<link href="@Url.Content("~/Content/font.css")" rel="stylesheet" type="text/css" />
+
+@model librarium.Models.Member
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Member</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonalNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonalNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MembershipCardId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MembershipCardId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default" }) 
+    @Html.ActionLink("Back to List", "Index", "Members", htmlAttributes: new { @class = "btn btn-default" })
+</p>
